@@ -1,3 +1,6 @@
+"""Please Note: I am facing some version related issue while accessing openai. I have tried different methods and different versions of api to fix this but due to time constraint i am using gemini api"""
+
+
 from dotenv import load_dotenv
 load_dotenv() ## load all the environemnt variables
 
