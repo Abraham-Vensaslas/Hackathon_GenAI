@@ -296,12 +296,23 @@ if submit:
         cleaned_query = clean_sql_query(raw_response)
         print("Cleaned SQL Query:", cleaned_query)
         query_result  = read_sql_query(cleaned_query, "Retail_details.db")
+
+        print(query_result)
         
         # Format the response for display
         if query_result and len(query_result) == 1 and len(query_result[0]) == 1:
             # Extract the single result value from the tuple
             result_value = query_result[0][0]
             
+            # Generate a dynamic message based on the question
+            conversational_response = interact_with_user_gemini(question, result_value)
+            #Update the session state with the new conversation history
+            st.session_state.conversation_history.append({"role": "user", "content": question})
+            st.session_state.conversation_history.append({"role": "assistant", "content": conversational_response})
+
+            st.markdown(f"**Assistant:** {conversational_response}")
+        elif len(query_result) > 1:     
+            result_value = query_result       
             # Generate a dynamic message based on the question
             conversational_response = interact_with_user_gemini(question, result_value)
             #Update the session state with the new conversation history
